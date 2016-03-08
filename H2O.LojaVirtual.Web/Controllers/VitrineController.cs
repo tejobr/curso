@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using H2O.LojaVirtual.Dominio.Repositorio;
+using H2O.LojaVirtual.Web.Models;
 
 namespace H2O.LojaVirtual.Web.Controllers
 {
@@ -14,16 +15,32 @@ namespace H2O.LojaVirtual.Web.Controllers
 
       public int ProdutosPorPagina = 8;
 
-      public ActionResult ListaProdutos(int pagina=1)
+      public ViewResult ListaProdutos(int pagina=1)
         {
+
          oRepositorio = new ProdutosRepositorio();
 
-         var oProdutos = oRepositorio.Produtos
-            .OrderBy(p => p.Descricao)
-            .Skip((pagina - 1) * ProdutosPorPagina)
-            .Take(ProdutosPorPagina);
+         ProdutosViewModel model = new ProdutosViewModel
+         {
 
-         return View(oProdutos);
+
+            Produtos  = oRepositorio.Produtos
+                .OrderBy(p => p.Descricao)
+                .Skip((pagina - 1) * ProdutosPorPagina)
+                .Take(ProdutosPorPagina),
+
+            Paginacao = new Paginacao
+            {
+
+               PaginaAtual = pagina,
+               ItensPorPagina = ProdutosPorPagina,
+               ItensTotal = oRepositorio.Produtos.Count()
+             }
+
+          };
+               
+
+         return View(model);
          
         }
     }

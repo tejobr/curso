@@ -13,7 +13,7 @@ namespace H2O.LojaVirtual.Web.HtmlHelpers
 
          StringBuilder resultado = new StringBuilder();
 
-         for (int i=1; i < paginacao.TotalPaginas;i++)
+         for (int i=1; i <= paginacao.TotalPaginas; i++)
          {
 
             TagBuilder tag = new TagBuilder("a") ;
@@ -28,14 +28,14 @@ namespace H2O.LojaVirtual.Web.HtmlHelpers
                tag.AddCssClass("btn-primary");
 
             }
-
+                        
             tag.AddCssClass("btn btn-default");
 
             resultado.Append(tag);
 
-            return MvcHtmlString.Create(resultado.ToString());
-            
          }
+
+         return MvcHtmlString.Create(resultado.ToString());
       }
 
    }
